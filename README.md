@@ -1,9 +1,34 @@
+        Nexus-Drive FD (Smart Servo Node)
 
-The Nexus-Drive FD is an intelligent FOC (Field Oriented Control) servo controller designed to drive X and Y axes with industrial-grade dynamics. It offloads real-time motor physics from the Master H7, communicating via high-speed CAN FD.
-Key Hardware Features:
-- MCU: STM32G431 (170MHz, Cordic math accelerator for FOC).
-- Power Stage: 3-Phase Gate Driver (DRV8301 or DRV8323) with 6x High-current N-CH MOSFETs (PowerFLAT 5x6).
-- Current Sensing: Dual or Triple shunt resistors with G431 internal OPAMPs for precise torque control.
-- Feedback: AS5047P / AS5048 Magnetic Absolute Encoder (14-bit SPI) for closed-loop position control.
-- Safety: Hardware Overcurrent, Overtemperature, and Stall Detection reporting back to Nexus-H7 via CAN FD.
-- Performance: Silent operation (Stealth), Zero step loss, and "Soft Collision" detection through real-time torque monitoring.
+
+Nexus-Drive FD — это высокопроизводительный интеллектуальный драйвер бесколлекторных (BLDC). Основная концепция: «Бесконечное количество осей через одну изолированную шину».
+
+🚀 Основные возможности
+Ядро: STM32G431R (Cortex-M4, 170 МГц) с аппаратными ускорителями математики (CORDIC/FMAC).
+Управление: Высокоточное векторное управление (FOC).
+Dual Loop Feedback:
+Внутренний: Магнитный энкодер MA702 (SPI) на валу мотора.
+Внешний: Поддержка линейных энкодеров (A/B фазы) для компенсации люфтов механики.
+Сила: До 300 Вт (24В, 15-30А) на низкоомных MOSFET NTMFS5C628 / AON6512.
+
+🛡️ Промышленная надежность.
+Проект отличается от «хобби-решений» глубокой проработкой защиты:
+Изолированный CAN FD: Полная гальваническая развязка на базе TD541SCANFD. Помехи моторов не влияют на центральный контроллер.
+Умный предохранитель: Входной каскад на BTS50085 (PROFET) — защита от переполюсовки, короткого замыкания и мягкий старт (Soft Start).
+Контроль тока: Прецизионные усилители INA240 / AD8210 на фазах мотора — высокая точность даже в зашумленной среде.
+Термоконтроль: Мониторинг температуры ключей и обмоток мотора.
+Brake Chopper: Аппаратный сброс энергии рекуперации при экстренном торможении.
+
+🛠 Технические характеристики
+Параметр	Значение
+Напряжение питания	12В — 24В (до 36В макс)
+Пиковый ток	30А
+Интерфейс связи	CAN FD (до 5 Мбит/с)
+Обратная связь	SPI (Motor) + AB Quadrature (Linear)
+Диагностика	UART Terminal + Debug Duty Cycle Pin
+Идентификация	Аппаратный ID (DIP-переключатели)
+
+🤝 Присоединяйтесь к разработке
+Проект открыт для «маньяков» программирования и электроники, которые верят, что станок должен быть надежным, как танк, и точным, как швейцарские часы.
+Заметки разработчика: "Трудно сделать так, чтобы это не работало совсем, когда каждый узел защищен аппаратно."
+(c) 2026 Nexus Systems. Разработано слесарем КИПиА.
